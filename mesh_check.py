@@ -77,7 +77,7 @@ def aspectR(v1,v2,v3):
 
 def genTri(x1,x2,x3):
 
-    "Calcula e retorna ? e plota ? de um triângulo dadas as coordenadas x de seus 3 vértices"
+    "Calcula de um triângulo dadas as coordenadas x de seus 3 vértices"
 
     y1= x1
     y2= -x2

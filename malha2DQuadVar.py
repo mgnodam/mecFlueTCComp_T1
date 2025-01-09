@@ -25,8 +25,6 @@ yuni= np.linspace(0,ly,ny)
 for i in range(0,nx):
     x[i]= lx*sin((xuni[i]/lx)*(pi/2))
 
-print(x)
-
 for i in range(0,ny):
     y[i]= ly*sin((yuni[i]/ly)*(pi/2))
 

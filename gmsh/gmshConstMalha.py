@@ -8,19 +8,19 @@ from math import *
 
 # DEFININDO CONTORNOS DA SIMULACAO
 
-lf = 5   # Comprimento à frente
-lb = 15  # Comprimento atrás
+lf = 2   # Comprimento à frente
+lb = 5  # Comprimento atrás
 
-h = 10
+h = 1
 
 # DEFININDO PARAMETROS
 
-eSizeEdges = 1.0
+eSizeEdges = 0.25
 eSizeAirf = 0.1
 
 # DEFININDO PONTOS DO PERFIL
 
-airfoil = np.array(pd.read_csv("n0012.csv" , sep = ';'))
+airfoil = np.array(pd.read_csv("./gmsh/n0012.csv" , sep = ';'))
 
 airfPoints = []
 
@@ -80,13 +80,17 @@ areaStr = "\nPlane Surface (1) = {1, 2};\n"
 
 contourCondStr = '\n'
 
-contourCondStr += 'Physical Line("wall",' + ' {}'.format(len(airfPoints) + 4) + ') = {1, 3, ' + airfCurves[0:(len(airfCurves)-2)] + "};\n"
+contourCondStr += 'Physical Line("bottomWall",' + ' {}'.format(len(airfPoints) + 4) + ') = {1' + "};\n"
 
-contourCondStr += 'Physical Line("inflow",' + ' {}'.format(len(airfPoints) + 5) + ') = {4};\n'
+contourCondStr += 'Physical Line("topWall",' + ' {}'.format(len(airfPoints) + 5) + ') = {3' + "};\n"
 
-contourCondStr += 'Physical Line("outflow",' + ' {}'.format(len(airfPoints) + 6) + ') = {2};\n'
+contourCondStr += 'Physical Line("airfWall",' + ' {}'.format(len(airfPoints) + 6) + ') = {' + airfCurves[0:(len(airfCurves)-2)] + "};\n"
 
-contourCondStr += 'Physical Surface("sur",' + ' {}'.format(len(airfPoints) + 7) + ') = {1};\n'
+contourCondStr += 'Physical Line("inflow",' + ' {}'.format(len(airfPoints) + 7) + ') = {4};\n'
+
+contourCondStr += 'Physical Line("outflow",' + ' {}'.format(len(airfPoints) + 8) + ') = {2};\n'
+
+contourCondStr += 'Physical Surface("sur",' + ' {}'.format(len(airfPoints) + 9) + ') = {1};\n'
 
     # Recombinando
     
@@ -100,5 +104,5 @@ meshStr = pointsStr + linesStr + curvesStr + areaStr + contourCondStr + recombin
 
 # ESCREVENDO O ARQUIVO GEO
 
-with open('msh.geo', 'w') as mesh:
+with open('./gmsh/msh.geo', 'w') as mesh:
     mesh.write(meshStr)
